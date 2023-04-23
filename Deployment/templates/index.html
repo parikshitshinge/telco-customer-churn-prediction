@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<HTML>
+    <HEAD>
+        <TITLE>Customer Churn Prediction</TITLE>
+
+        <script>
+            function generateRandom() {
+                document.getElementById("areacode").selectedIndex = Math.floor(Math.random() * 2);
+                document.getElementById("intl_plan").selectedIndex = Math.floor(Math.random() * 2);
+                document.getElementById("vmail_plan").selectedIndex = Math.floor(Math.random() * 2);
+                document.getElementById("number_vmail_messages").value = Math.floor(Math.random() * 50);
+                document.getElementById("total_day_minutes").value = Math.floor(Math.random() * 350);
+                document.getElementById("total_day_calls").value = Math.floor(Math.random() * 165);
+                document.getElementById("total_day_charge").value = Math.floor(Math.random() * 60);
+                document.getElementById("total_eve_minutes").value = Math.floor(Math.random() * 360);
+                document.getElementById("total_eve_calls").value = Math.floor(Math.random() * 170);
+                document.getElementById("total_eve_charge").value = Math.floor(Math.random() * 30);
+                document.getElementById("total_night_minutes").value = Math.floor(Math.random() * 400);
+                document.getElementById("total_night_calls").value = Math.floor(Math.random() * 175);
+                document.getElementById("total_night_charge").value = Math.floor(Math.random() * 20);
+                document.getElementById("total_intl_minutes").value = Math.floor(Math.random() * 20);
+                document.getElementById("total_intl_calls").value = Math.floor(Math.random() * 20);
+                document.getElementById("total_intl_charge").value = Math.floor(Math.random() * 6);
+                document.getElementById("no_cust_serv_calls").value = Math.floor(Math.random() * 10);
+            }
+        </script>
+        <style>
+            label {
+                width:220px;
+                clear:left;
+                text-align:right;
+                padding-right:10px;
+            }
+
+            input, label, button, select {
+                float:left;
+                margin-top: 5px;
+            }
+
+            #submit, #result {
+                float:left; display:inline; clear:both;
+            }
+
+            #result {
+            color: blue;
+            font-size:20px;
+            }
+
+        </style>
+    </HEAD>
+    <BODY>
+        <h2>ABC Telco. Churn Prediction Engine</h2>
+        <p>Enter all the details below for any customer and click on "Predict" to see the result.</p>
+        <button id="random" onclick="generateRandom()">Generate data randomly</button><br><br>
+        <FORM action="{{url_for('predict')}}" method="POST">
+            <label for="areacode">Choose your area code:          </label>
+            <SELECT name="areacode" id="areacode">
+                <option value="area_code_415">area_code_415</option>
+                <option value="area_code_408">area_code_408</option>
+                <option value="area_code_510">area_code_510</option>
+            </SELECT> &nbsp; &nbsp;
+            <label for="intl_plan">Do you have international plan? </label>
+            <SELECT name="intl_plan" id="intl_plan">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </SELECT> &nbsp; &nbsp;
+            <label for="vmail_plan">Do you have voice mail plan? </label>
+            <SELECT name="vmail_plan" id="vmail_plan">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </SELECT><br><br>
+
+            <label for="total_day_minutes">Day mins </label>
+            <input type="text" name="total_day_minutes"  id="total_day_minutes" placeholder="Day mins" required="required" />&nbsp; &nbsp;
+            
+            <label for="total_day_calls">Day calls </label>
+            <input type="text" name="total_day_calls"  id="total_day_calls" placeholder="Day calls" required="required" />&nbsp; &nbsp;
+            
+            <label for="total_day_charge">Day charges </label>
+            <input type="text" name="total_day_charge" id="total_day_charge" placeholder="Day charges" required="required" /><br><br>
+            
+            <label for="total_eve_minutes">Evening mins  </label>
+            <input type="text" name="total_eve_minutes" id="total_eve_minutes" placeholder="Evening mins" required="required" />&nbsp; &nbsp;
+            
+            <label for="total_eve_calls">Evening calls </label>
+            <input type="text" name="total_eve_calls" id="total_eve_calls" placeholder="Evening calls" required="required" />&nbsp; &nbsp;
+            
+            <label for="total_eve_charge">Evening charges </label>
+            <input type="text" name="total_eve_charge" id="total_eve_charge" placeholder="Evening charges" required="required" /><br><br>
+            
+            <label for="total_nt_minutes">Night mins </label>
+            <input type="text" name="total_night_minutes" id="total_night_minutes" placeholder="Night mins" required="required" />&nbsp; &nbsp;
+            
+            <label for="total_nt_calls">Night calls </label>
+            <input type="text" name="total_night_calls" id="total_night_calls" placeholder="Night calls" required="required" />&nbsp; &nbsp;
+            
+            <label for="total_nt_charge">Night charges </label>
+            <input type="text" name="total_night_charge" id="total_night_charge" placeholder="Night charges" required="required" /><br><br>
+            
+            <label for="total_intl_minutes">International mins </label>
+            <input type="text" name="total_intl_minutes" id="total_intl_minutes" placeholder="International mins" required="required" />&nbsp; &nbsp;
+            
+            <label for="total_intl_calls">International calls </label>
+            <input type="text" name=="total_intl_calls" id="total_intl_calls" placeholder="International calls" required="required" />&nbsp; &nbsp;
+            
+            <label for="total_intl_charge">International charges </label>
+            <input type="text" name="total_intl_charge" id="total_intl_charge" placeholder="International charges" required="required" /><br><br>
+
+            <label for="number_vmail_messages">Voice messages </label>
+            <input type="text" name="number_vmail_messages" id="number_vmail_messages" placeholder="Voice messages" required="required" /><br><br>
+            
+            <label for="no_cust_serv_calls">Customer service calls </label>
+            <input type="text" name="no_cust_serv_calls" id="no_cust_serv_calls" placeholder="Customer service calls" required="required" /><br><br>
+            
+            <button type="submit" id="submit">Predict </button> 
+            
+            <p id="result">{{ prediction_result }}</p>
+        </FORM>
+
+        
+    </BODY>
+</HTML>
